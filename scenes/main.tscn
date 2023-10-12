@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy6mfx5hnliyq"]
+
+[ext_resource type="Shader" path="res://shaders/lorenz-attractor.gdshader" id="1_el42q"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_2s6lm"]
+
+[sub_resource type="Environment" id="Environment_o57ol"]
+background_mode = 1
+background_color = Color(0.0980392, 0.101961, 0.105882, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nrtv7"]
+shader = ExtResource("1_el42q")
+shader_parameter/scaling_factor = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qopvs"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="PointMesh" id="PointMesh_jm5ie"]
+material = SubResource("StandardMaterial3D_qopvs")
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o57ol")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 10000
+speed_scale = 0.4
+randomness = 1.0
+process_material = SubResource("ShaderMaterial_nrtv7")
+draw_pass_1 = SubResource("PointMesh_jm5ie")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 25)
+script = ExtResource("2_2s6lm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, -1.4924e-07, -6.18172e-08, -6.18172e-08, -0.707107, 0.707107, -1.4924e-07, -0.707107, -0.707107, 2.08165e-12, 25, -25)
